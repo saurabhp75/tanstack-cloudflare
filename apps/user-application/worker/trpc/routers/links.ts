@@ -12,25 +12,33 @@ import {
   LINK_LIST,
 } from "./dummy-data";
 
+import { createLink } from "@repo/data-ops/queries/links";
+
 export const linksTrpcRoutes = t.router({
   linkList: t.procedure
     .input(
       z.object({
         offset: z.number().optional(),
-      }),
+      })
     )
     .query(async ({}) => {
       return LINK_LIST;
     }),
-  createLink: t.procedure.input(createLinkSchema).mutation(async ({}) => {
-    return "random-id";
-  }),
+  createLink: t.procedure
+    .input(createLinkSchema)
+    .mutation(async ({ ctx, input }) => {
+      const linkId = await createLink({
+        accountId: ctx.userInfo.userId,
+        ...input,
+      });
+      return linkId;
+    }),
   updateLinkName: t.procedure
     .input(
       z.object({
         linkId: z.string(),
         name: z.string().min(1).max(300),
-      }),
+      })
     )
     .mutation(async ({ input }) => {
       console.log(input.linkId, input.name);
@@ -39,7 +47,7 @@ export const linksTrpcRoutes = t.router({
     .input(
       z.object({
         linkId: z.string(),
-      }),
+      })
     )
     .query(async ({}) => {
       const data = {
@@ -62,7 +70,7 @@ export const linksTrpcRoutes = t.router({
       z.object({
         linkId: z.string(),
         destinations: destinationsSchema,
-      }),
+      })
     )
     .mutation(async ({ input }) => {
       console.log(input.linkId, input.destinations);
