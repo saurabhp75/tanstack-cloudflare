@@ -34,6 +34,7 @@ export function GeoRoutingToggle({
 
   const updateDestinationMutation = useMutation(
     trpc.links.updateLinkDestinations.mutationOptions({
+      // Refresh page on successful mutaion
       onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: trpc.links.getLink.queryKey({
@@ -45,11 +46,11 @@ export function GeoRoutingToggle({
       onError: () => {
         toast.error("Failed to update geo routing");
       },
-    }),
+    })
   );
 
   const handleUpdateDestination = (
-    updatedDestinations: DestinationsSchemaType,
+    updatedDestinations: DestinationsSchemaType
   ) => {
     updateDestinationMutation.mutate({
       linkId: linkId,
