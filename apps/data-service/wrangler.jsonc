@@ -19,5 +19,12 @@
 			// Use remote CF D1 in dev mode
 			"remote": true
 		}
+	],
+	"kv_namespaces": [
+		{
+			"binding": "CACHE",
+			"id": "1fbcdbbbfe3c40f98567cc4517133755",
+			"remote": true
+		}
 	]
 }
