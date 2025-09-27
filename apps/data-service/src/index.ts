@@ -1,3 +1,4 @@
+export { DestinationEvaluationWorkflow } from '@/workflows/destination-evaluation-workflow';
 import { WorkerEntrypoint } from 'cloudflare:workers';
 import { App } from './hono/app';
 import { initDatabase } from '@repo/data-ops/database';
