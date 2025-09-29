@@ -58,6 +58,7 @@ export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, Desti
 		// Save evaluation in DB
 		const evaluationId = await step.do('Save evaluation in database', async () => {
 			return await addEvaluation({
+				evaluationId: collectedData.evaluationId,
 				linkId: event.payload.linkId,
 				status: aiStatus.status,
 				reason: aiStatus.statusReason,
