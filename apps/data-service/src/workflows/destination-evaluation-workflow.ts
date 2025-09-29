@@ -43,16 +43,16 @@ export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, Desti
 			const accountId = event.payload.accountId;
 			const r2PathHtml = `evaluations/${accountId}/html/${evaluationId}`;
 			const r2PathBodyText = `evaluations/${accountId}/body-text/${evaluationId}`;
-			const r2PathScreenshot = `evaluations/${accountId}/screenshot/${evaluationId}.png`;
+			// const r2PathScreenshot = `evaluations/${accountId}/screenshot/${evaluationId}.png`;
 
-			// Convert base64 data URL to binary buffer for R2 storage
-			const screenshotBase64 = collectedData.screenshotDataUrl.replace(/^data:image\/png;base64,/, '');
-			const screenshotBuffer = Buffer.from(screenshotBase64, 'base64');
+			// // Convert base64 data URL to binary buffer for R2 storage
+			// const screenshotBase64 = collectedData.screenshotDataUrl.replace(/^data:image\/png;base64,/, '');
+			// const screenshotBuffer = Buffer.from(screenshotBase64, 'base64');
 
-			// Store screenshot as PNG on R2
-			await this.env.BUCKET.put(r2PathScreenshot, screenshotBuffer, {
-				httpMetadata: { contentType: 'image/png' },
-			});
+			// // Store screenshot as PNG on R2
+			// await this.env.BUCKET.put(r2PathScreenshot, screenshotBuffer, {
+			// 	httpMetadata: { contentType: 'image/png' },
+			// });
 
 			await this.env.BUCKET.put(r2PathHtml, collectedData.html);
 			await this.env.BUCKET.put(r2PathBodyText, collectedData.bodyText);
