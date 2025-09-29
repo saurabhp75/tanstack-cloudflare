@@ -6,11 +6,13 @@ import { WorkflowEntrypoint, WorkflowEvent, WorkflowStep } from 'cloudflare:work
 
 export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, DestinationStatusEvaluationParams> {
 	async run(event: Readonly<WorkflowEvent<DestinationStatusEvaluationParams>>, step: WorkflowStep) {
+		// Init DB, workflow runs in different context than CF worker
 		initDatabase(this.env.DB);
 		const collectedData = await step.do('Collect rendered destination page data', async () => {
 			return collectDestinationInfo(this.env, event.payload.destinationUrl);
 		});
 
+		// Use AI to check status of page
 		const aiStatus = await step.do(
 			'Use AI to check status of page',
 			{
@@ -25,6 +27,7 @@ export class DestinationEvaluationWorkflow extends WorkflowEntrypoint<Env, Desti
 			}
 		);
 
+		// Save evaluation in DB
 		const evaluationId = await step.do('Save evaluation in database', async () => {
 			return await addEvaluation({
 				linkId: event.payload.linkId,
