@@ -64,6 +64,10 @@
 			{
 				"name": "EVALUATION_SCHEDULAR",
 				"class_name": "EvaluationScheduler"
+			},
+			{
+				"class_name": "LinkClickTracker",
+				"name": "LINK_CLICK_TRACKER_OBJECT"
 			}
 		]
 	},
@@ -71,6 +75,10 @@
 		{
 			"tag": "v1",
 			"new_classes": ["EvaluationScheduler"]
+		},
+		{
+			"tag": "v2",
+			"new_sqlite_classes": ["LinkClickTracker"]
 		}
 	]
 }
