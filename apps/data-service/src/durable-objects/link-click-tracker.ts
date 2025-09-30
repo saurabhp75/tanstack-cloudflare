@@ -32,26 +32,4 @@ export class LinkClickTracker extends DurableObject {
 			time
 		);
 	}
-
-	async fetch(_: Request) {
-		const query = `
-			SELECT *
-			FROM geo_link_clicks
-			limit 100
-		`;
-
-		const cursor = this.sql.exec(query);
-		const results = cursor.toArray();
-
-		return new Response(
-			JSON.stringify({
-				clicks: results,
-			}),
-			{
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
-	}
 }
