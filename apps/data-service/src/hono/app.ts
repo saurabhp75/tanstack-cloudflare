@@ -44,3 +44,16 @@ App.get('/:id', async (c) => {
 
 	return c.redirect(destination);
 });
+
+App.get('/do/:name', async (c) => {
+	const name = c.req.param('name');
+	// Get the DO instance-id by name
+	const doId = c.env.EVALUATION_SCHEDULAR.idFromName(name);
+	// Get DO instance from the id
+	const stub = c.env.EVALUATION_SCHEDULAR.get(doId);
+	await stub.increment();
+	const count = await stub.getCount();
+	return c.json({
+		count,
+	});
+});
