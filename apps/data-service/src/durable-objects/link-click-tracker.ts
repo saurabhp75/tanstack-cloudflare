@@ -71,6 +71,7 @@ export class LinkClickTracker extends DurableObject {
 		const webSocketPair = new WebSocketPair();
 		const [client, server] = Object.values(webSocketPair);
 		this.ctx.acceptWebSocket(server);
+		console.log('Fetch request recieved from Hono');
 		return new Response(null, {
 			status: 101,
 			webSocket: client,
